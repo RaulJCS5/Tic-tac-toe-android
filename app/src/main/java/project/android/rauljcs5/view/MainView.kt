@@ -15,40 +15,30 @@ import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
 fun MainView() {
-    val isAuthenticated = remember {
-        mutableStateOf(false)
-    }
     val isSignIn = remember {
         mutableStateOf(false)
     }
     val isSignUp = remember {
         mutableStateOf(false)
     }
-    val user = remember {
-        mutableStateOf(null)
-    }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        if (isAuthenticated.value) {
-            SignedInView({ isAuthenticated.value = false }, user.value)
+        if (isSignIn.value) {
+            SignInView { isSignIn.value = false }
+        } else if (isSignUp.value) {
+            SignUpView { isSignUp.value = false }
         } else {
-            if (isSignIn.value) {
-                SignInView { isSignIn.value = false }
-            } else if (isSignUp.value) {
-                SignUpView { isSignUp.value = false }
-            } else {
-                Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
-                    Box(Modifier.align(Alignment.Center)) {
-                        Column {
-                            Text(text = "Main view")
-                            Button(onClick = { isSignIn.value = true }) {
-                                Text(text = "Sign In")
-                            }
-                            Button(onClick = { isSignUp.value = true }) {
-                                Text(text = "Sign Up")
-                            }
+            Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
+                Box(Modifier.align(Alignment.Center)) {
+                    Column {
+                        Text(text = "Main view")
+                        Button(onClick = { isSignIn.value = true }) {
+                            Text(text = "Sign In")
+                        }
+                        Button(onClick = { isSignUp.value = true }) {
+                            Text(text = "Sign Up")
                         }
                     }
                 }
