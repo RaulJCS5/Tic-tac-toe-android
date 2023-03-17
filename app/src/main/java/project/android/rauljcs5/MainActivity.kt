@@ -3,41 +3,32 @@ package project.android.rauljcs5
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import project.android.rauljcs5.ui.theme.TictactoeTheme
+import project.android.rauljcs5.view.DefaultView
 
 class MainActivity : ComponentActivity() {
+
+    private val repo by lazy {
+        (application as DependenciesContainer).userRepo
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             TictactoeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                DefaultView(signedIn = ::signedIn, signedUp = ::signedUp)
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+    private fun signedIn(){
+        //SignedInActivity.navigate(this)
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TictactoeTheme {
-        Greeting("Android")
+    private fun signedUp(){
+        //SignedInActivity.navigate(this)
     }
 }
