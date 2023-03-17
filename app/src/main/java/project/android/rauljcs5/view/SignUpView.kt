@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun SignUpView() {
+fun SignUpView(goBackSignUp:()->Unit={}) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -27,7 +24,9 @@ fun SignUpView() {
         val phoneNumber = remember { mutableStateOf("") }
         val username = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
-        Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(Alignment.Center)) {
             Box(Modifier.align(Alignment.Center)) {
                 Column {
                     Text(text = "Sign up")
@@ -51,6 +50,9 @@ fun SignUpView() {
                         label = { Text(text = "Password") },
                         value = password.value,
                         onValueChange = { password.value = it })
+                    Button(onClick = goBackSignUp) {
+                        Text(text = "Go back")
+                    }
                 }
             }
         }

@@ -3,10 +3,8 @@ package project.android.rauljcs5
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import project.android.rauljcs5.ui.theme.TictactoeTheme
-import project.android.rauljcs5.view.DefaultView
+import project.android.rauljcs5.view.MainView
 
 class MainActivity : ComponentActivity() {
 
@@ -19,7 +17,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TictactoeTheme {
-                DefaultView(signedIn = ::signedIn, signedUp = ::signedUp)
+                MainView()
             }
         }
     }

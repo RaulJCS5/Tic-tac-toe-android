@@ -9,19 +9,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import project.android.rauljcs5.SignedInActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun SignedInView(logout: ()->Unit={}) {
-    val user = remember {
-        mutableStateOf("Raul")
-    }
+fun SignedInView(isAuthenticated: ()->Unit={}, value: String?) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -29,8 +24,8 @@ fun SignedInView(logout: ()->Unit={}) {
         Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
             Box(Modifier.align(Alignment.Center)) {
                 Column {
-                    Text(text = "Welcome ${user.value}")
-                    Button(onClick = logout) {
+                    Text(text = "Welcome $value")
+                    Button(onClick = isAuthenticated) {
                         Text(text = "Logout")
                     }
                 }
@@ -43,6 +38,11 @@ fun SignedInView(logout: ()->Unit={}) {
 @Composable
 fun SignedInPreview() {
     TictactoeTheme {
-        SignedInView()
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            SignedInView({}, "username")
+        }
     }
 }
