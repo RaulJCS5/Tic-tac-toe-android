@@ -1,5 +1,6 @@
 package project.android.rauljcs5
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,6 +12,16 @@ class MainActivity : ComponentActivity() {
 
     private val repo by lazy {
         (application as DependenciesContainer).userRepo
+    }
+
+    companion object {
+        fun navigate(context: Context) {
+            with(context) {
+                // Cria um Intent para iniciar a SignedInActivity
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

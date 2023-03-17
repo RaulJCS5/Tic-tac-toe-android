@@ -31,8 +31,11 @@ class SignedInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            SignedInView()
+            SignedInView(logout=::logout)
         }
     }
-
+    private fun logout() {
+        MainActivity.navigate(this)
+        finish()
+    }
 }
