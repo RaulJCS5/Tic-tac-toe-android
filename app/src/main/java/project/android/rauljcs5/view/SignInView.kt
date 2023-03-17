@@ -16,7 +16,7 @@ import kotlin.math.sign
 import kotlin.reflect.KFunction0
 
 @Composable
-fun SignInView(signedIn:()->Unit={},goBackSignIn:()->Unit={}) {
+fun SignInView(signedIn:(username:String)->Unit={},goBackSignIn:()->Unit={}) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -37,7 +37,7 @@ fun SignInView(signedIn:()->Unit={},goBackSignIn:()->Unit={}) {
                         label = { Text(text = "Password") },
                         value = password.value,
                         onValueChange = { password.value = it })
-                    Button(onClick = signedIn) {
+                    Button(onClick = { signedIn(username.value) }) {
                         Text(text = "Sign in")
                     }
                     Button(onClick = goBackSignIn) {

@@ -9,6 +9,8 @@ import androidx.activity.viewModels
 import palbp.laboratory.demos.tictactoe.utils.viewModelInit
 import project.android.rauljcs5.view.SignedInView
 
+const val USERNAME = "username"
+
 class SignedInActivity : ComponentActivity() {
 
     private val viewModel by viewModels<SignedInViewModel> {
@@ -19,10 +21,11 @@ class SignedInActivity : ComponentActivity() {
     }
 
     companion object {
-        fun navigate(context: Context) {
+        fun navigate(context: Context, username:String) {
             with(context) {
                 // Cria um Intent para iniciar a SignedInActivity
                 val intent = Intent(this, SignedInActivity::class.java)
+                intent.putExtra(USERNAME, username)
                 startActivity(intent)
             }
         }
@@ -31,7 +34,13 @@ class SignedInActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            SignedInView(logout=::logout)
+            val username = intent.getStringExtra(USERNAME)?:""
+            if (username.isBlank()){
+                logout()
+            }
+            else {
+                SignedInView(logout = ::logout, username)
+            }
         }
     }
     private fun logout() {

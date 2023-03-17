@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun MainView(signedIn:()->Unit={}) {
+fun MainView(signedIn:(username:String)->Unit={}) {
     val isSignIn = remember {
         mutableStateOf(false)
     }

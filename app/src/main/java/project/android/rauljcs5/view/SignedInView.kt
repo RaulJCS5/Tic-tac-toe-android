@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun SignedInView(logout:()->Unit={}) {
+fun SignedInView(logout:()->Unit={},username:String) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -24,7 +24,7 @@ fun SignedInView(logout:()->Unit={}) {
         Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
             Box(Modifier.align(Alignment.Center)) {
                 Column {
-                    Text(text = "Welcome")
+                    Text(text = "Welcome $username")
                     Button(onClick = logout) {
                         Text(text = "Logout")
                     }
@@ -42,7 +42,7 @@ fun SignedInPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            SignedInView()
+            SignedInView(username="rauljcs5")
         }
     }
 }

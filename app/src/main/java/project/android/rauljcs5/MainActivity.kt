@@ -33,8 +33,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun signedIn() {
-        SignedInActivity.navigate(this)
+    private fun signedIn(username:String) {
+        SignedInActivity.navigate(this,username)
         finish()
     }
 }
