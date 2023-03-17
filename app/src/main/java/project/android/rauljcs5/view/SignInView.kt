@@ -12,10 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
+import kotlin.math.sign
 import kotlin.reflect.KFunction0
 
 @Composable
-fun SignInView(goBackSignIn:()->Unit={}) {
+fun SignInView(signedIn:()->Unit={},goBackSignIn:()->Unit={}) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -36,6 +37,9 @@ fun SignInView(goBackSignIn:()->Unit={}) {
                         label = { Text(text = "Password") },
                         value = password.value,
                         onValueChange = { password.value = it })
+                    Button(onClick = signedIn) {
+                        Text(text = "Sign in")
+                    }
                     Button(onClick = goBackSignIn) {
                         Text(text = "Go back")
                     }

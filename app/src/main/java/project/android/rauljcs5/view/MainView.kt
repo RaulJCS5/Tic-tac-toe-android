@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun MainView() {
+fun MainView(signedIn:()->Unit={}) {
     val isSignIn = remember {
         mutableStateOf(false)
     }
@@ -26,9 +26,9 @@ fun MainView() {
         color = MaterialTheme.colors.background
     ) {
         if (isSignIn.value) {
-            SignInView { isSignIn.value = false }
+            SignInView(signedIn) { isSignIn.value = false }
         } else if (isSignUp.value) {
-            SignUpView { isSignUp.value = false }
+            SignUpView( signedIn) { isSignUp.value = false }
         } else {
             Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
                 Box(Modifier.align(Alignment.Center)) {
