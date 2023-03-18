@@ -1,4 +1,4 @@
-package palbp.laboratory.demos.tictactoe.utils
+package project.android.rauljcs5.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

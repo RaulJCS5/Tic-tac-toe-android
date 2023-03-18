@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import palbp.laboratory.demos.tictactoe.utils.viewModelInit
+import project.android.rauljcs5.utils.viewModelInit
 import project.android.rauljcs5.view.SignedInView
 
 const val USERNAME = "username"
@@ -35,6 +35,7 @@ class SignedInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             val username = intent.getStringExtra(USERNAME)?:""
+            val usernameViewModel = viewModel.username
             if (username.isBlank()){
                 logout()
             }
