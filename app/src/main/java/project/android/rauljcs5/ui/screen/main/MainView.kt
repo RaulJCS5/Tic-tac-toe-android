@@ -1,4 +1,4 @@
-package project.android.rauljcs5.ui.screen
+package project.android.rauljcs5.ui.screen.main
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import project.android.rauljcs5.ui.screen.signin.SignInView
+import project.android.rauljcs5.ui.screen.signup.SignUpView
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
