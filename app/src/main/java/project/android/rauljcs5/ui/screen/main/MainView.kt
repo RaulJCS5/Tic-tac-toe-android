@@ -16,30 +16,25 @@ import project.android.rauljcs5.ui.screen.signup.SignUpView
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun MainView() {
-    val isSignIn = remember {
-        mutableStateOf(false)
-    }
-    val isSignUp = remember {
-        mutableStateOf(false)
-    }
+fun MainView(
+    onSignInRequested: (() -> Unit)? = null,
+    onSignUpRequested: (() -> Unit)? = null,
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        if (isSignIn.value) {
-            SignInView() { isSignIn.value = false }
-        } else if (isSignUp.value) {
-            SignUpView() { isSignUp.value = false }
-        } else {
-            Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
-                Box(Modifier.align(Alignment.Center)) {
-                    Column {
-                        Text(text = "Main view")
-                        Button(onClick = { isSignIn.value = true }) {
+        Box(modifier = Modifier.wrapContentSize(Alignment.Center)) {
+            Box(Modifier.align(Alignment.Center)) {
+                Column {
+                    Text(text = "Main view")
+                    if (onSignInRequested != null) {
+                        Button(onClick = onSignInRequested) {
                             Text(text = "Sign In")
                         }
-                        Button(onClick = { isSignUp.value = true }) {
+                    }
+                    if (onSignUpRequested != null) {
+                        Button(onClick = onSignUpRequested) {
                             Text(text = "Sign Up")
                         }
                     }

@@ -7,6 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import project.android.rauljcs5.DependenciesContainer
+import project.android.rauljcs5.ui.screen.signin.SignInActivity
+import project.android.rauljcs5.ui.screen.signup.SignUpActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
@@ -35,7 +37,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                MainView()
+                MainView(
+                    onSignInRequested = { SignInActivity.navigate(context = this) },
+                    onSignUpRequested = { SignUpActivity.navigate(context = this) }
+                )
             }
         }
     }

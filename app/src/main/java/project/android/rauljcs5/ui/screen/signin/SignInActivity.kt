@@ -30,7 +30,7 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                SignInView()
+                SignInView(goBackSignIn = {finish()})
             }
         }
     }
