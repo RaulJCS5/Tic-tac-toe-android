@@ -11,10 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import project.android.rauljcs5.User
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun SignUpView(goBackSignUp:()->Unit={}) {
+fun SignUpView(goBackSignUp:()->Unit={},onUserSignUp: (User) -> Unit = { }) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -50,7 +51,10 @@ fun SignUpView(goBackSignUp:()->Unit={}) {
                         label = { Text(text = "Password") },
                         value = password.value,
                         onValueChange = { password.value = it })
-                    Button(onClick = {}) {
+                    Button(onClick = {
+                        if (name.value.isNotBlank() && email.value.isNotBlank() && phoneNumber.value.isNotBlank() && username.value.isNotBlank() && password.value.isNotBlank())
+                            onUserSignUp(User(username = username.value, password = password.value))
+                    }) {
                         Text(text = "Sign in")
                     }
                     Button(onClick = goBackSignUp) {

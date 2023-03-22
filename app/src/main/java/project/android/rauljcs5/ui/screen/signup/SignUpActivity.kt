@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import project.android.rauljcs5.toLocalDto
 import project.android.rauljcs5.ui.screen.main.MainActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
@@ -35,7 +36,12 @@ class SignUpActivity : ComponentActivity() {
                 SignUpView(goBackSignUp = {
                     MainActivity.navigate(origin = this)
                     finish()
-                })
+                },
+                    onUserSignUp = {
+                        MainActivity.navigate(origin = this, user = it.toLocalDto())
+                        finish()
+                    }
+                )
             }
         }
     }
