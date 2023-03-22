@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import project.android.rauljcs5.toLocalDto
+import project.android.rauljcs5.ui.screen.main.MainActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
@@ -31,7 +33,16 @@ class SignInActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                SignInView(goBackSignIn = {finish()})
+                SignInView(
+                    goBackSignIn = {
+                        MainActivity.navigate(origin = this)
+                        finish()
+                    },
+                    onUserSignIn = {
+                        MainActivity.navigate(origin = this, user = it.toLocalDto())
+                        finish()
+                    }
+                )
             }
         }
     }
@@ -39,6 +50,7 @@ class SignInActivity : ComponentActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         Log.v("TAG","Back button clicked sign in")
+        MainActivity.navigate(origin = this)
         finish()
     }
 }

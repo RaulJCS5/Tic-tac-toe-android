@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import project.android.rauljcs5.ui.screen.main.MainActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
@@ -31,7 +32,10 @@ class SignUpActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                SignUpView(goBackSignUp = {finish()})
+                SignUpView(goBackSignUp = {
+                    MainActivity.navigate(origin = this)
+                    finish()
+                })
             }
         }
     }
@@ -39,6 +43,7 @@ class SignUpActivity : ComponentActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         Log.v("TAG","Back button clicked sign up")
+        MainActivity.navigate(origin = this)
         finish()
     }
 }

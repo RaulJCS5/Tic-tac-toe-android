@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -45,10 +46,16 @@ class MainActivity : ComponentActivity() {
             TictactoeTheme {
                 if (userExtra == null) {
                     MainView(
-                        onSignInRequested = { SignInActivity.navigate(context = this) },
-                        onSignUpRequested = { SignUpActivity.navigate(context = this) }
+                        onSignInRequested = {
+                            SignInActivity.navigate(context = this)
+                            finish()
+                        },
+                        onSignUpRequested = {
+                            SignUpActivity.navigate(context = this)
+                            finish()
+                        }
                     )
-                }else{
+                } else {
                     SignedInView(logout = {}, username = "fake")
                 }
             }
