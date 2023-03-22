@@ -1,11 +1,8 @@
 package project.android.rauljcs5.ui.screen.main
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -57,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 } else {
-                    SignedInView(logout = {
+                    UserHome(logout = {
                         intent.removeExtra(USER_EXTRA)
                         viewModel.logout()
                     }, username = viewModel.username!!)
