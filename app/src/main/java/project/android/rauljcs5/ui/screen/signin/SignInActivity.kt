@@ -3,6 +3,7 @@ package project.android.rauljcs5.ui.screen.signin
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -33,5 +34,11 @@ class SignInActivity : ComponentActivity() {
                 SignInView(goBackSignIn = {finish()})
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        Log.v("TAG","Back button clicked sign in")
+        finish()
     }
 }
