@@ -44,7 +44,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                if (userExtra == null) {
+                viewModel.setLogin(userExtra)
+                if (viewModel.username == null) {
                     MainView(
                         onSignInRequested = {
                             SignInActivity.navigate(context = this)
@@ -56,7 +57,10 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 } else {
-                    SignedInView(logout = {}, username = "fake")
+                    SignedInView(logout = {
+                        intent.removeExtra(USER_EXTRA)
+                        viewModel.logout()
+                    }, username = viewModel.username!!)
                 }
             }
         }
