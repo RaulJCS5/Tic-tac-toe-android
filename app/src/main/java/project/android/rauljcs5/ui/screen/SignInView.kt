@@ -1,4 +1,4 @@
-package project.android.rauljcs5.view
+package project.android.rauljcs5.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,14 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun SignUpView(signedIn:(username:String)->Unit={}, goBackSignUp:()->Unit={}) {
+fun SignInView(goBackSignIn:()->Unit={}) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-        val name = remember { mutableStateOf("") }
-        val email = remember { mutableStateOf("") }
-        val phoneNumber = remember { mutableStateOf("") }
         val username = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
         Box(modifier = Modifier
@@ -29,19 +26,7 @@ fun SignUpView(signedIn:(username:String)->Unit={}, goBackSignUp:()->Unit={}) {
             .wrapContentSize(Alignment.Center)) {
             Box(Modifier.align(Alignment.Center)) {
                 Column {
-                    Text(text = "Sign up")
-                    TextField(
-                        label = { Text(text = "Name") },
-                        value = name.value,
-                        onValueChange = { name.value = it })
-                    TextField(
-                        label = { Text(text = "Email") },
-                        value = email.value,
-                        onValueChange = { email.value = it })
-                    TextField(
-                        label = { Text(text = "Phone number") },
-                        value = phoneNumber.value,
-                        onValueChange = { phoneNumber.value = it })
+                    Text(text = "Sign in")
                     TextField(
                         label = { Text(text = "Username") },
                         value = username.value,
@@ -50,10 +35,10 @@ fun SignUpView(signedIn:(username:String)->Unit={}, goBackSignUp:()->Unit={}) {
                         label = { Text(text = "Password") },
                         value = password.value,
                         onValueChange = { password.value = it })
-                    Button(onClick = { signedIn(username.value) }) {
+                    Button(onClick = {  }) {
                         Text(text = "Sign in")
                     }
-                    Button(onClick = goBackSignUp) {
+                    Button(onClick = goBackSignIn) {
                         Text(text = "Go back")
                     }
                 }
@@ -64,8 +49,8 @@ fun SignUpView(signedIn:(username:String)->Unit={}, goBackSignUp:()->Unit={}) {
 
 @Preview(showBackground = true)
 @Composable
-fun SignUpPreview() {
+fun SignInPreview() {
     TictactoeTheme {
-        SignUpView()
+        SignInView()
     }
 }

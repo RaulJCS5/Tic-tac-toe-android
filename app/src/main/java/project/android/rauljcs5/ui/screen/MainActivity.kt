@@ -1,12 +1,12 @@
-package project.android.rauljcs5
+package project.android.rauljcs5.ui.screen
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.ui.theme.TictactoeTheme
-import project.android.rauljcs5.view.MainView
 
 class MainActivity : ComponentActivity() {
 
@@ -17,7 +17,6 @@ class MainActivity : ComponentActivity() {
     companion object {
         fun navigate(context: Context) {
             with(context) {
-                // Cria um Intent para iniciar a SignedInActivity
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
@@ -28,13 +27,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TictactoeTheme {
-                MainView(signedIn = ::signedIn)
+                MainView()
             }
         }
-    }
-
-    private fun signedIn(username:String) {
-        SignedInActivity.navigate(this,username)
-        finish()
     }
 }
