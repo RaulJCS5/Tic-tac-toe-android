@@ -15,7 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 
 @Composable
-fun UserHome(logout:()->Unit, username:String) {
+fun UserHome(
+    logout:()->Unit, username:String,
+    onLobbyRequested: (() -> Unit)? = null,
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -26,6 +29,11 @@ fun UserHome(logout:()->Unit, username:String) {
                     Text(text = "Welcome $username")
                     Button(onClick = logout) {
                         Text(text = "Logout")
+                    }
+                    if (onLobbyRequested != null) {
+                        Button(onClick = onLobbyRequested) {
+                            Text(text = "Lobby")
+                        }
                     }
                 }
             }

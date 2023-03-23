@@ -41,7 +41,7 @@ fun SignInView(goBackSignIn:()->Unit={},
                         onValueChange = { password.value = it })
                     Button(onClick = {
                         if (username.value.isNotBlank() && password.value.isNotBlank())
-                            onUserSignIn(User(username = username.value, password = password.value))
+                            onUserSignIn(User(username = username.value))
                     }) {
                         Text(text = "Sign in")
                     }

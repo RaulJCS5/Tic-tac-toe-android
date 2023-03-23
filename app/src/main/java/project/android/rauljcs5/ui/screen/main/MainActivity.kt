@@ -8,16 +8,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.LocalUserDto
+import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.toLocalDto
+import project.android.rauljcs5.ui.screen.lobby.LobbyActivity
 import project.android.rauljcs5.ui.screen.signin.SignInActivity
 import project.android.rauljcs5.ui.screen.signup.SignUpActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
 class MainActivity : ComponentActivity() {
-
-    private val repo by lazy {
-        (application as DependenciesContainer).userRepo
-    }
 
     private val viewModel: MainViewModel by viewModels {
         viewModelInit {
@@ -54,10 +53,17 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 } else {
-                    UserHome(logout = {
-                        intent.removeExtra(USER_EXTRA)
-                        viewModel.logout()
-                    }, username = viewModel.username!!)
+                    UserHome(
+                        logout = {
+                            intent.removeExtra(USER_EXTRA)
+                            viewModel.logout()
+                        },
+                        username = viewModel.username!!,
+                        onLobbyRequested = {
+                            LobbyActivity.navigate(context = this, player = PlayerInfo(viewModel.username!!).toLocalDto())
+                            //finish()
+                        }
+                    )
                 }
             }
         }

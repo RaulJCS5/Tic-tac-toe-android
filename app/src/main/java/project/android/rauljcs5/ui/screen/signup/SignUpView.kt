@@ -53,7 +53,7 @@ fun SignUpView(goBackSignUp:()->Unit={},onUserSignUp: (User) -> Unit = { }) {
                         onValueChange = { password.value = it })
                     Button(onClick = {
                         if (name.value.isNotBlank() && email.value.isNotBlank() && phoneNumber.value.isNotBlank() && username.value.isNotBlank() && password.value.isNotBlank())
-                            onUserSignUp(User(username = username.value, password = password.value))
+                            onUserSignUp(User(username = username.value))
                     }) {
                         Text(text = "Sign in")
                     }
