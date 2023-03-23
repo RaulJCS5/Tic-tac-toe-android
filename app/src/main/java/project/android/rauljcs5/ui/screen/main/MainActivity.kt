@@ -6,8 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import project.android.rauljcs5.DependenciesContainer
-import project.android.rauljcs5.LocalUserDto
+import project.android.rauljcs5.LocalPlDto
 import project.android.rauljcs5.PlayerInfo
 import project.android.rauljcs5.toLocalDto
 import project.android.rauljcs5.ui.screen.lobby.LobbyActivity
@@ -26,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         private const val USER_EXTRA = "USER_EXTRA"
-        fun navigate(origin: Activity, user: LocalUserDto? = null) {
+        fun navigate(origin: Activity, user: LocalPlDto? = null) {
             with(origin) {
                 val intent = Intent(this, MainActivity::class.java)
                 if (user != null)
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
         }
     }
     @Suppress("deprecation")
-    private val userExtra: LocalUserDto?
+    private val userExtra: LocalPlDto?
         get() =
-            intent.getParcelableExtra(USER_EXTRA, LocalUserDto::class.java)
+            intent.getParcelableExtra(USER_EXTRA, LocalPlDto::class.java)
 }

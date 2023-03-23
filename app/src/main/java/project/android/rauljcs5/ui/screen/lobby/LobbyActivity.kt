@@ -5,8 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import project.android.rauljcs5.LocalPlayerDto
-import project.android.rauljcs5.ui.screen.main.MainActivity
+import project.android.rauljcs5.ui.theme.TictactoeTheme
+import project.android.rauljcs5.utils.viewModelInit
 
 class LobbyActivity: ComponentActivity(){
 
@@ -22,8 +25,22 @@ class LobbyActivity: ComponentActivity(){
         }
     }
 
+    private val viewModel: LobbyViewModel by viewModels {
+        viewModelInit {
+            LobbyViewModel()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContent{
+            TictactoeTheme {
+                viewModel.setPlayer(playerExtra)
+                LobbyView(
+                    player = viewModel.player!!
+                )
+            }
+        }
     }
 
     @Deprecated("Deprecated in Java")
@@ -31,5 +48,8 @@ class LobbyActivity: ComponentActivity(){
         Log.v("TAG","Back button clicked sign in")
         finish()
     }
-
+    @Suppress("deprecation")
+    private val playerExtra: LocalPlayerDto?
+        get() =
+            intent.getParcelableExtra(LobbyActivity.PLAYER_EXTRA, LocalPlayerDto::class.java)
 }

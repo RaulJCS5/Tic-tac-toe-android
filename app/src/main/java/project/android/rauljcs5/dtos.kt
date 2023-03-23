@@ -11,7 +11,7 @@ data class User(val username: String) {
 }
 
 @Parcelize
-data class LocalUserDto(
+data class LocalPlDto(
     val username: String,
 ) : Parcelable
 
@@ -19,11 +19,11 @@ data class LocalUserDto(
  * Converts this user to a local DTO, that can be placed in Bundles and
  * passed around between activities.
  */
-fun User.toLocalDto() = LocalUserDto(username)
+fun User.toLocalDto() = LocalPlDto(username)
 
 /**
  * Creates a [User] instance from the given DTO
  */
-fun User(localDto: LocalUserDto): User {
+fun User(localDto: LocalPlDto): User {
     return User(username = localDto.username)
 }

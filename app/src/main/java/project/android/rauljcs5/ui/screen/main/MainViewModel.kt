@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import project.android.rauljcs5.LocalUserDto
+import project.android.rauljcs5.LocalPlDto
 
 class MainViewModel(): ViewModel() {
     private var _isLoading by mutableStateOf(false)
@@ -23,7 +23,7 @@ class MainViewModel(): ViewModel() {
         }
     }
 
-    fun setLogin(userExtra: LocalUserDto?) {
+    fun setLogin(userExtra: LocalPlDto?) {
         viewModelScope.launch {
             if (userExtra!=null)
                 _username=userExtra.username
