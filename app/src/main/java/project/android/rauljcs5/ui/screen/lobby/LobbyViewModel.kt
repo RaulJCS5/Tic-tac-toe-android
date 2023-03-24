@@ -45,9 +45,9 @@ class LobbyViewModel(): ViewModel() {
     suspend fun joinLobby(): Job? =
         if (lobbyMonitor==null) {
             val eventObserver = viewModelScope.launch {
+                delay(3000)
                 val playerList = mutableListOf<PlayerInfo>()
                 playerList.add(PlayerInfo("test1"))
-                delay(3000)
                 playerList.add(PlayerInfo("test2"))
                 playerList.add(PlayerInfo("test3"))
                 _players.value = playerList
