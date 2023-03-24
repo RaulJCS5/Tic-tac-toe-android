@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.ui.screen.game.GameActivity
@@ -54,7 +53,7 @@ class LobbyActivity: ComponentActivity(){
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.addPlayers()
+                viewModel.joinLobby()
                 try {
                     viewModel.pendingMatch.collect {
                         if (it != null) {
@@ -66,7 +65,7 @@ class LobbyActivity: ComponentActivity(){
                         }
                     }
                 } finally {
-                    finish()
+                    viewModel.leaveLobby()
                 }
             }
         }
@@ -80,5 +79,5 @@ class LobbyActivity: ComponentActivity(){
     @Suppress("deprecation")
     private val playerExtra: LocalPlayerDto?
         get() =
-            intent.getParcelableExtra(LobbyActivity.PLAYER_EXTRA, LocalPlayerDto::class.java)
+            intent.getParcelableExtra(PLAYER_EXTRA, LocalPlayerDto::class.java)
 }

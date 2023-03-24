@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,8 @@ class LobbyViewModel(): ViewModel() {
     private var _player by mutableStateOf<PlayerInfo?>(null)
     var player: PlayerInfo?=null
         get() = _player
+    private var lobbyMonitor: Job? = null
+
 
     private val _players = MutableStateFlow<List<PlayerInfo>>(emptyList())
     val players = _players.asStateFlow()
@@ -39,14 +42,31 @@ class LobbyViewModel(): ViewModel() {
         }
     }
 
-    suspend fun addPlayers() {
-        val playerList = mutableListOf<PlayerInfo>()
-        playerList.add(PlayerInfo("test1"))
-        delay(3000)
-        playerList.add(PlayerInfo("test2"))
-        playerList.add(PlayerInfo("test3"))
-        _players.value = playerList
-    }
+    suspend fun joinLobby(): Job? =
+        if (lobbyMonitor==null) {
+            val eventObserver = viewModelScope.launch {
+                val playerList = mutableListOf<PlayerInfo>()
+                playerList.add(PlayerInfo("test1"))
+                delay(3000)
+                playerList.add(PlayerInfo("test2"))
+                playerList.add(PlayerInfo("test3"))
+                _players.value = playerList
+            }
+            lobbyMonitor=eventObserver
+            eventObserver
+        }
+        else {
+            null
+        }
+
+    fun leaveLobby(): Job? =
+    if (lobbyMonitor != null) {
+        viewModelScope.launch {
+            lobbyMonitor?.cancel()
+            lobbyMonitor = null
+            _pendingMatch.value = null
+        }
+    } else null
 }
 
 /**
