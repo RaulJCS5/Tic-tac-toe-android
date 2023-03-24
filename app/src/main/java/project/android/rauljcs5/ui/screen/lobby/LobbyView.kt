@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import project.android.rauljcs5.PlayerInfo
 
-data class LobbyScreenState(
+data class LobbyState(
     val players: List<PlayerInfo> = emptyList()
 )
 
 @Composable
 fun LobbyView(
-    state: LobbyScreenState = LobbyScreenState(),
+    state: LobbyState = LobbyState(),
     player: PlayerInfo,
     onPlayerSelected: (PlayerInfo) -> Unit = { },
 ) {

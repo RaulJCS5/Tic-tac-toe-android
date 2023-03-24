@@ -45,7 +45,7 @@ class LobbyActivity: ComponentActivity(){
                 val players by viewModel.players.collectAsState()
                 viewModel.setPlayer(playerExtra)
                 LobbyView(
-                    state = LobbyScreenState(players),
+                    state = LobbyState(players),
                     player = viewModel.player!!,
                     onPlayerSelected = { player -> viewModel.matchPlayer(player) },
                 )

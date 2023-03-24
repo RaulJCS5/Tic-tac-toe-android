@@ -8,8 +8,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import project.android.rauljcs5.GameChallengeInfo
+import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.PlayerInfo
 import project.android.rauljcs5.ui.screen.lobby.Challenge
+import project.android.rauljcs5.ui.screen.lobby.LobbyActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
@@ -38,7 +40,8 @@ class GameActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             TictactoeTheme {
-                GameView()
+                viewModel.addGameInfo(gameInfoExtra)
+                GameView(gameState = GameState(gameInfo = viewModel.gameInfo!!))
             }
         }
     }
@@ -48,5 +51,10 @@ class GameActivity : ComponentActivity() {
         Log.v("TAG","Back button clicked game")
         finish()
     }
+
+    @Suppress("deprecation")
+    private val gameInfoExtra: GameChallengeInfo?
+        get() =
+            intent.getParcelableExtra(GAME_INFO_EXTRA, GameChallengeInfo::class.java)
 
 }
