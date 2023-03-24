@@ -7,6 +7,12 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
 import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
@@ -35,10 +41,18 @@ class LobbyActivity: ComponentActivity(){
         super.onCreate(savedInstanceState)
         setContent{
             TictactoeTheme {
+                val players by viewModel.players.collectAsState()
                 viewModel.setPlayer(playerExtra)
                 LobbyView(
-                    player = viewModel.player!!
+                    state = LobbyScreenState(players),
+                    player = viewModel.player!!,
+                    onPlayerSelected = { player -> viewModel.matchPlayer(player) },
                 )
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.addPlayers()
             }
         }
     }
