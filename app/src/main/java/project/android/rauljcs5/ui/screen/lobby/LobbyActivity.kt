@@ -12,8 +12,10 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.LocalPlayerDto
+import project.android.rauljcs5.ui.screen.game.GameActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
@@ -39,7 +41,7 @@ class LobbyActivity: ComponentActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{
+        setContent {
             TictactoeTheme {
                 val players by viewModel.players.collectAsState()
                 viewModel.setPlayer(playerExtra)
@@ -53,13 +55,26 @@ class LobbyActivity: ComponentActivity(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.addPlayers()
+                try {
+                    viewModel.pendingMatch.collect {
+                        if (it != null) {
+                            GameActivity.navigate(
+                                origin = this@LobbyActivity,
+                                localPlayer = it.localPlayer,
+                                challenge = it.challenge,
+                            )
+                        }
+                    }
+                } finally {
+                    finish()
+                }
             }
         }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        Log.v("TAG","Back button clicked sign in")
+        Log.v("TAG","Back button clicked lobby")
         finish()
     }
     @Suppress("deprecation")

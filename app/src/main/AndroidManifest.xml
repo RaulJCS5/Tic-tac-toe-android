@@ -36,6 +36,9 @@
         <activity
             android:name=".ui.screen.lobby.LobbyActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.screen.game.GameActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
