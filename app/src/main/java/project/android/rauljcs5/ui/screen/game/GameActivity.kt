@@ -7,23 +7,21 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import project.android.rauljcs5.GameChallengeInfo
-import project.android.rauljcs5.LocalPlayerDto
-import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.GameChallenge
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.lobby.Challenge
-import project.android.rauljcs5.ui.screen.lobby.LobbyActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
 
 class GameActivity : ComponentActivity() {
 
     companion object {
-        const val GAME_INFO_EXTRA = "MATCH_INFO_EXTRA"
-        fun navigate(origin: Context, localPlayer: PlayerInfo, challenge: Challenge) {
+        const val GAME_CHALLENGE_EXTRA = "GAME_CHALLENGE_EXTRA"
+        fun navigate(origin: Context, localPlayer: Player, challenge: Challenge) {
             with(origin) {
                 startActivity(
                     Intent(this, GameActivity::class.java).also {
-                        it.putExtra(GAME_INFO_EXTRA, GameChallengeInfo(localPlayer, challenge))
+                        it.putExtra(GAME_CHALLENGE_EXTRA, GameChallenge(localPlayer, challenge))
                     }
                 )
             }
@@ -40,8 +38,8 @@ class GameActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             TictactoeTheme {
-                viewModel.addGameInfo(gameInfoExtra)
-                GameView(gameState = GameState(gameInfo = viewModel.gameInfo!!))
+                viewModel.addGameChallenge(gameChallengeExtra)
+                GameView(gameState = GameState(gameChallenge = viewModel.gameChallenge!!))
             }
         }
     }
@@ -53,8 +51,8 @@ class GameActivity : ComponentActivity() {
     }
 
     @Suppress("deprecation")
-    private val gameInfoExtra: GameChallengeInfo?
+    private val gameChallengeExtra: GameChallenge?
         get() =
-            intent.getParcelableExtra(GAME_INFO_EXTRA, GameChallengeInfo::class.java)
+            intent.getParcelableExtra(GAME_CHALLENGE_EXTRA, GameChallenge::class.java)
 
 }

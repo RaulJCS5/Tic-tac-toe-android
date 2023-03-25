@@ -10,17 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.Player
 
 data class LobbyState(
-    val players: List<PlayerInfo> = emptyList()
+    val players: List<Player> = emptyList()
 )
 
 @Composable
 fun LobbyView(
     state: LobbyState = LobbyState(),
-    player: PlayerInfo,
-    onPlayerSelected: (PlayerInfo) -> Unit = { },
+    player: Player,
+    onPlayerSelected: (Player) -> Unit = { },
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +35,7 @@ fun LobbyView(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         items(state.players){
-                            PlayerInfoView(playerInfo = it, onPlayerSelected = onPlayerSelected)
+                            PlayerView(player = it, onPlayerSelected = onPlayerSelected)
                         }
                     }
                 }

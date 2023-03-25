@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import project.android.rauljcs5.LocalPlDto
-import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.toLocalDto
 import project.android.rauljcs5.ui.screen.lobby.LobbyActivity
 import project.android.rauljcs5.ui.screen.signin.SignInActivity
@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                         },
                         username = viewModel.username!!,
                         onLobbyRequested = {
-                            LobbyActivity.navigate(context = this, player = PlayerInfo(viewModel.username!!).toLocalDto())
+                            LobbyActivity.navigate(context = this, player = Player(viewModel.username!!).toLocalDto())
                             //finish()
                         }
                     )

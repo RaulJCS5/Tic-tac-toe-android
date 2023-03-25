@@ -6,17 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import project.android.rauljcs5.GameChallengeInfo
-import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.GameChallenge
 
 class GameViewModel : ViewModel() {
-    private var _gameInfo by mutableStateOf<GameChallengeInfo?>(null)
-    var gameInfo: GameChallengeInfo?=null
-        get() = _gameInfo
+    private var _gameChallenge by mutableStateOf<GameChallenge?>(null)
+    var gameChallenge: GameChallenge?=null
+        get() = _gameChallenge
 
-    fun addGameInfo(gameInfoExtra: GameChallengeInfo?) {
+    fun addGameChallenge(gameChallengeExtra: GameChallenge?) {
         viewModelScope.launch {
-            _gameInfo=gameInfoExtra
+            _gameChallenge=gameChallengeExtra
         }
     }
 }

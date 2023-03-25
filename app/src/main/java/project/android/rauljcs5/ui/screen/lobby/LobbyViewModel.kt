@@ -11,16 +11,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.LocalPlayerDto
-import project.android.rauljcs5.PlayerInfo
+import project.android.rauljcs5.Player
 
 class LobbyViewModel(): ViewModel() {
-    private var _player by mutableStateOf<PlayerInfo?>(null)
-    var player: PlayerInfo?=null
+    private var _player by mutableStateOf<Player?>(null)
+    var player: Player?=null
         get() = _player
     private var lobbyMonitor: Job? = null
 
 
-    private val _players = MutableStateFlow<List<PlayerInfo>>(emptyList())
+    private val _players = MutableStateFlow<List<Player>>(emptyList())
     val players = _players.asStateFlow()
 
     private val _pendingMatch = MutableStateFlow<PendingChallenge?>(null)
@@ -29,11 +29,11 @@ class LobbyViewModel(): ViewModel() {
     fun setPlayer(playerExtra: LocalPlayerDto?) {
         viewModelScope.launch {
             if (playerExtra!=null)
-                _player= PlayerInfo(playerExtra)
+                _player= Player(playerExtra)
         }
     }
 
-    fun matchPlayer(player: PlayerInfo) {
+    fun matchPlayer(player: Player) {
         viewModelScope.launch {
             _pendingMatch.value = SentChallenge(
                 localPlayer = _player!!,
@@ -46,10 +46,10 @@ class LobbyViewModel(): ViewModel() {
         if (lobbyMonitor==null) {
             val eventObserver = viewModelScope.launch {
                 delay(3000)
-                val playerList = mutableListOf<PlayerInfo>()
-                playerList.add(PlayerInfo("test1"))
-                playerList.add(PlayerInfo("test2"))
-                playerList.add(PlayerInfo("test3"))
+                val playerList = mutableListOf<Player>()
+                playerList.add(Player("test1"))
+                playerList.add(Player("test2"))
+                playerList.add(Player("test3"))
                 _players.value = playerList
             }
             lobbyMonitor=eventObserver
@@ -74,19 +74,19 @@ class LobbyViewModel(): ViewModel() {
  * @property challenger     The challenger information
  * @property challenged     The information of the challenged player
  */
-data class Challenge(val challenger: PlayerInfo, val challenged: PlayerInfo)
+data class Challenge(val challenger: Player, val challenged: Player)
 
 
 /**
  * The player information of the first player to move for this challenge.
  */
-val Challenge.firstToMove: PlayerInfo
+val Challenge.firstToMove: Player
     get() = challenger
 
-sealed class PendingChallenge(val localPlayer: PlayerInfo, val challenge: Challenge)
+sealed class PendingChallenge(val localPlayer: Player, val challenge: Challenge)
 
-class IncomingChallenge(localPlayer: PlayerInfo, challenge: Challenge)
+class IncomingChallenge(localPlayer: Player, challenge: Challenge)
     : PendingChallenge(localPlayer, challenge)
 
-class SentChallenge(localPlayer: PlayerInfo, challenge: Challenge)
+class SentChallenge(localPlayer: Player, challenge: Challenge)
     : PendingChallenge(localPlayer, challenge)

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
-data class PlayerInfo(val username: String, val id: UUID = UUID.randomUUID()) {
+data class Player(val username: String, val id: UUID = UUID.randomUUID()) {
     init { require(username.isNotBlank()) }
 }
 
@@ -13,8 +13,8 @@ data class LocalPlayerDto(
     val username: String
 ) : Parcelable
 
-fun PlayerInfo.toLocalDto() = LocalPlayerDto(username)
+fun Player.toLocalDto() = LocalPlayerDto(username)
 
-fun PlayerInfo(localDto: LocalPlayerDto): PlayerInfo {
-    return PlayerInfo(username = localDto.username)
+fun Player(localDto: LocalPlayerDto): Player {
+    return Player(username = localDto.username)
 }
