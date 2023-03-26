@@ -8,12 +8,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.*
+import project.android.rauljcs5.ui.screen.game.firebase.MatchService
 
 enum class MatchState { IDLE, STARTING, STARTED, FINISHED }
 
 class GameViewModel(private val matchService: MatchService) : ViewModel() {
     private var _gameChallenge by mutableStateOf<GameChallenge?>(null)
-    var gameChallenge: GameChallenge?=null
+    val gameChallenge: GameChallenge?
         get() = _gameChallenge
 
     private var _state by mutableStateOf(MatchState.IDLE)

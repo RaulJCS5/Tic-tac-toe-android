@@ -8,13 +8,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.LocalPlDto
 
-class MainViewModel(): ViewModel() {
+class MainViewModel: ViewModel() {
     private var _isLoading by mutableStateOf(false)
     val isLoading: Boolean
         get() = _isLoading
 
     private var _username by mutableStateOf<String?>(null)
-    var username: String?=null
+    val username: String?
         get() = _username
 
     fun logout(){

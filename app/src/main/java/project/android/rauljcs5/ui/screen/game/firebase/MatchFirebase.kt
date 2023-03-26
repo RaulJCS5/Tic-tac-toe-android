@@ -1,7 +1,8 @@
-package project.android.rauljcs5
+package project.android.rauljcs5.ui.screen.game.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.game.model.GameBoard
 import project.android.rauljcs5.ui.screen.game.model.Marker
 import project.android.rauljcs5.ui.screen.game.model.Position

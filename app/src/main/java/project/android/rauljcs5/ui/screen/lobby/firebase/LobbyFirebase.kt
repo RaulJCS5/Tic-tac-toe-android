@@ -1,11 +1,10 @@
-package project.android.rauljcs5
+package project.android.rauljcs5.ui.screen.lobby.firebase
 
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.lobby.Challenge
 
 const val LOBBY = "lobby"

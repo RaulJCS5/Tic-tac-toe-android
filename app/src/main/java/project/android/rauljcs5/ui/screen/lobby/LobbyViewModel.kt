@@ -6,11 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import project.android.rauljcs5.LobbyService
+import project.android.rauljcs5.ui.screen.lobby.firebase.LobbyService
 import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.Player
 
@@ -18,7 +17,7 @@ class LobbyViewModel(
     private val lobbyService: LobbyService
 ): ViewModel() {
     private var _player by mutableStateOf<Player?>(null)
-    var player: Player?=null
+    val player: Player?
         get() = _player
     private var lobbyMonitor: Job? = null
 

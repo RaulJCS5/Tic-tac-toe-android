@@ -1,5 +1,6 @@
-package project.android.rauljcs5
+package project.android.rauljcs5.ui.screen.game.firebase
 
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.game.model.Position
 
 interface MatchService {

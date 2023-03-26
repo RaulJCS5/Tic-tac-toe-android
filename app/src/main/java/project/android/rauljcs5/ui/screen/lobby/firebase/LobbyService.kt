@@ -1,7 +1,7 @@
-package project.android.rauljcs5
+package project.android.rauljcs5.ui.screen.lobby.firebase
 
 import com.google.firebase.firestore.DocumentReference
-import kotlinx.coroutines.flow.Flow
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.lobby.Challenge
 
 sealed class LobbyEvent
