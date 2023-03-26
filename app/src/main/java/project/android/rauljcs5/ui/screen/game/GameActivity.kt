@@ -7,11 +7,13 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.GameChallenge
 import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.lobby.Challenge
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
+import java.util.*
 
 class GameActivity : ComponentActivity() {
 
@@ -30,18 +32,37 @@ class GameActivity : ComponentActivity() {
 
     private val viewModel: GameViewModel by viewModels {
         viewModelInit {
-            GameViewModel()
+            val app = (application as DependenciesContainer)
+            GameViewModel(app.matchService)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent{
+        setContent {
+            val currentState = viewModel.state
             TictactoeTheme {
                 viewModel.addGameChallenge(gameChallengeExtra)
                 GameView(gameState = GameState(gameChallenge = viewModel.gameChallenge!!))
             }
+            if (viewModel.state == MatchState.IDLE){
+                viewModel.startMatch(localPlayer, opponentPlayer)
+            }
         }
+    }
+
+    private val localPlayer: Player by lazy {
+        Player(
+            username = gameChallengeExtra.localUser,
+            id = UUID.fromString(gameChallengeExtra.localId)
+        )
+    }
+
+    private val opponentPlayer: Player by lazy {
+        Player(
+            username = gameChallengeExtra.opponentUser,
+            id = UUID.fromString(gameChallengeExtra.opponentId)
+        )
     }
 
     @Deprecated("Deprecated in Java")
@@ -51,8 +72,10 @@ class GameActivity : ComponentActivity() {
     }
 
     @Suppress("deprecation")
-    private val gameChallengeExtra: GameChallenge?
-        get() =
+    private val gameChallengeExtra: GameChallenge by lazy {
+        val info =
             intent.getParcelableExtra(GAME_CHALLENGE_EXTRA, GameChallenge::class.java)
+        checkNotNull(info)
+    }
 
 }
