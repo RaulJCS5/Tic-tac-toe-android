@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
+import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.ui.screen.game.GameActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
@@ -34,7 +35,8 @@ class LobbyActivity: ComponentActivity(){
 
     private val viewModel: LobbyViewModel by viewModels {
         viewModelInit {
-            LobbyViewModel()
+            val app = (application as DependenciesContainer)
+            LobbyViewModel(app.lobbyService)
         }
     }
 

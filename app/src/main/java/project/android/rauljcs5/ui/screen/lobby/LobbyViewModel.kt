@@ -10,10 +10,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import project.android.rauljcs5.LobbyService
 import project.android.rauljcs5.LocalPlayerDto
 import project.android.rauljcs5.Player
 
-class LobbyViewModel(): ViewModel() {
+class LobbyViewModel(
+    private val lobbyService: LobbyService
+): ViewModel() {
     private var _player by mutableStateOf<Player?>(null)
     var player: Player?=null
         get() = _player
@@ -45,7 +48,8 @@ class LobbyViewModel(): ViewModel() {
     suspend fun joinLobby(): Job? =
         if (lobbyMonitor==null) {
             val eventObserver = viewModelScope.launch {
-                delay(3000)
+                TODO("Need to update player")
+                lobbyService.addPlayerToLobby(Player("FAKE"))
                 val playerList = mutableListOf<Player>()
                 playerList.add(Player("test1"))
                 playerList.add(Player("test2"))
@@ -65,6 +69,7 @@ class LobbyViewModel(): ViewModel() {
             lobbyMonitor?.cancel()
             lobbyMonitor = null
             _pendingMatch.value = null
+            lobbyService.removePlayerFromLobby()
         }
     } else null
 }
