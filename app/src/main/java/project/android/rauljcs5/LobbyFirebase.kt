@@ -1,11 +1,15 @@
 package project.android.rauljcs5
 
+import android.util.Log
+import android.widget.Toast
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
+import project.android.rauljcs5.ui.screen.lobby.Challenge
 
 const val LOBBY = "lobby"
+const val CHALLENGER_FIELD = "challenger"
 const val USERNAME = "username"
 
 class LobbyFirebase(private val db: FirebaseFirestore) : LobbyService {
@@ -13,6 +17,7 @@ class LobbyFirebase(private val db: FirebaseFirestore) : LobbyService {
     private sealed class LobbyState
     private object Idle : LobbyState()
     private class InUse(
+        val localPlayer: Player,
         val document: DocumentReference
     ): LobbyState()
 
@@ -21,7 +26,7 @@ class LobbyFirebase(private val db: FirebaseFirestore) : LobbyService {
         docRef
             .set(localPlayer.toDocumentContent())
             .await()
-        state = InUse(docRef)
+        state = InUse(localPlayer,docRef)
         return docRef
     }
 
@@ -31,6 +36,23 @@ class LobbyFirebase(private val db: FirebaseFirestore) : LobbyService {
             is Idle -> throw IllegalStateException()
         }
         state = Idle
+    }
+
+    override suspend fun acceptChallenge(to: Player): Challenge {
+        //TODO("Accept challenge")
+        val localPlayer = when (val currentState = state) {
+            is Idle -> throw java.lang.IllegalStateException()
+            is InUse -> currentState.localPlayer
+        }
+        val documentRef = db.collection(LOBBY).document(to.id.toString())
+        val documentSnapshot = documentRef.get().await()
+
+        if (documentSnapshot.exists()) {
+            documentRef.update(CHALLENGER_FIELD, localPlayer.toDocumentContent()).await()
+        } else {
+            Log.v("Tag","Did not update")
+        }
+        return Challenge(challenger = localPlayer, challenged = to)
     }
 
 }

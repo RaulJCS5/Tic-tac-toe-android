@@ -38,18 +38,18 @@ class LobbyViewModel(
 
     fun matchPlayer(player: Player) {
         viewModelScope.launch {
+            val challenge = lobbyService.acceptChallenge(to = player)
             _pendingMatch.value = SentChallenge(
                 localPlayer = _player!!,
-                challenge = Challenge(challenger = _player!!, challenged = player)
+                challenge = challenge
             )
         }
     }
 
-    suspend fun joinLobby(): Job? =
+    suspend fun joinLobby(player: Player): Job? =
         if (lobbyMonitor==null) {
             val eventObserver = viewModelScope.launch {
-                TODO("Need to update player")
-                lobbyService.addPlayerToLobby(Player("FAKE"))
+                lobbyService.addPlayerToLobby(player)
                 val playerList = mutableListOf<Player>()
                 playerList.add(Player("test1"))
                 playerList.add(Player("test2"))

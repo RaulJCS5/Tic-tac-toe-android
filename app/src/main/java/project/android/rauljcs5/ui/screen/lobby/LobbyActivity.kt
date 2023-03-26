@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.LocalPlayerDto
+import project.android.rauljcs5.Player
 import project.android.rauljcs5.ui.screen.game.GameActivity
 import project.android.rauljcs5.ui.theme.TictactoeTheme
 import project.android.rauljcs5.utils.viewModelInit
@@ -55,7 +56,7 @@ class LobbyActivity: ComponentActivity(){
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.joinLobby()
+                viewModel.joinLobby(Player(playerExtra!!))
                 try {
                     viewModel.pendingMatch.collect {
                         if (it != null) {
