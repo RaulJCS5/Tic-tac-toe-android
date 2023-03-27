@@ -44,18 +44,17 @@ class GameActivity : ComponentActivity() {
         setContent {
             val currentGame by viewModel.onGoingGame.collectAsState()
             TictactoeTheme {
-                viewModel.addGameChallenge(gameChallengeExtra)
                 GameView(
-                    gameState = GameState(
-                        gameChallenge = viewModel.gameChallenge!!,
-                        gameBoard = currentGame
+                    state = GameState(
+                        gameChallenge = gameChallengeExtra,
+                        game = currentGame
                     ),
                     onMoveRequested = { at -> viewModel.makeMove(at) },
                 )
             }
         }
         if (viewModel.state == MatchState.IDLE){
-            viewModel.startMatch(localPlayer, opponentPlayer)
+            viewModel.startMatch(localPlayer, opponentPlayer, gameChallengeExtra)
         }
     }
 

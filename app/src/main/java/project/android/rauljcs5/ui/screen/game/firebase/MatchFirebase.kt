@@ -3,6 +3,8 @@ package project.android.rauljcs5.ui.screen.game.firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import project.android.rauljcs5.Player
+import project.android.rauljcs5.ui.screen.game.Game
+import project.android.rauljcs5.ui.screen.game.makeMove
 import project.android.rauljcs5.ui.screen.game.model.GameBoard
 import project.android.rauljcs5.ui.screen.game.model.Marker
 import project.android.rauljcs5.ui.screen.game.model.Position
@@ -11,11 +13,11 @@ const val PLAYING = "playing"
 
 class MatchFirebase(private val realFirestoreDb: FirebaseFirestore) : MatchService {
 
-    private var onGoingGame: Pair<GameBoard, String>? = null
+    private var onGoingGame: Pair<Game, String>? = null
 
-    override suspend fun start(local: Player, opponent: Player, board: GameBoard) {
-        publishGame(board, local, opponent)
-        onGoingGame = Pair(board, local.id.toString())
+    override suspend fun start(local: Player, opponent: Player, game: Game) {
+        publishGame(game.board, local, opponent)
+        onGoingGame = Pair(game, local.id.toString())
     }
 
     private suspend fun publishGame(board:GameBoard, local: Player, opponent: Player) {
@@ -31,10 +33,11 @@ class MatchFirebase(private val realFirestoreDb: FirebaseFirestore) : MatchServi
             updateGame(game.first, game.second)
         }
     }
-    private suspend fun updateGame(game: GameBoard, gameId: String) {
+
+    private suspend fun updateGame(game: Game, gameId: String) {
         realFirestoreDb.collection(PLAYING)
             .document(gameId)
-            .update(game.toDocumentContent())
+            .update(game.board.toDocumentContent())
             .await()
     }
 

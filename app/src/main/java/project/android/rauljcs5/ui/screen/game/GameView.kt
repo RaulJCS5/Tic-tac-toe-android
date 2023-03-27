@@ -17,11 +17,11 @@ import project.android.rauljcs5.ui.screen.game.model.Position
 
 data class GameState(
     val gameChallenge:GameChallenge,
-    val gameBoard: GameBoard
+    val game: Game
 )
 @Composable
 fun GameView(
-    gameState:GameState,
+    state:GameState,
     onMoveRequested: (Position) -> Unit = { },
 ){
     Column(
@@ -30,10 +30,11 @@ fun GameView(
             .fillMaxSize(),
     ) {
         Spacer(modifier = Modifier.height(32.dp))
-        Text(text = "${gameState.gameChallenge.localUser} vs ${gameState.gameChallenge.opponentUser}")
+        Text(text = "${state.gameChallenge.localUser} vs ${state.gameChallenge.opponentUser}")
         BoardView(
-            board = gameState.gameBoard,
+            board = state.game.board,
             onTileSelected = onMoveRequested,
+            enabled = state.game.localPlayerMarker == state.game.board.turn,
             modifier = Modifier
                 .padding(32.dp)
                 .weight(1.0f, true)

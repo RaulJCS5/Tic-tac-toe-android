@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import project.android.rauljcs5.ui.screen.game.model.BOARD_SIDE
 import project.android.rauljcs5.ui.screen.game.model.GameBoard
 import project.android.rauljcs5.ui.screen.game.model.Position
-
 @Composable
 fun BoardView(
     board: GameBoard,
     onTileSelected: (at: Position) -> Unit,
+    enabled: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -28,6 +28,7 @@ fun BoardView(
                     val at = Position(row, column)
                     TileView(
                         move = board[at],
+                        enabled = enabled,
                         modifier = Modifier.weight(weight = 1.0f, fill = true),
                         onSelected = { onTileSelected(at) },
                     )

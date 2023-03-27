@@ -17,27 +17,23 @@ import project.android.rauljcs5.ui.screen.game.model.Position
 enum class MatchState { IDLE, STARTING, STARTED, FINISHED }
 
 class GameViewModel(private val matchService: MatchService) : ViewModel() {
-    private var _gameChallenge by mutableStateOf<GameChallenge?>(null)
-    val gameChallenge: GameChallenge?
-        get() = _gameChallenge
 
-    private val _onGoingGame = MutableStateFlow(GameBoard())
+    private val _onGoingGame = MutableStateFlow(Game())
     val onGoingGame = _onGoingGame.asStateFlow()
 
     private var _state by mutableStateOf(MatchState.IDLE)
     val state: MatchState
         get() = _state
 
-    fun addGameChallenge(gameChallengeExtra: GameChallenge?) {
-        viewModelScope.launch {
-            _gameChallenge=gameChallengeExtra
-        }
-    }
-
-    fun startMatch(localPlayer: Player, opponentPlayer: Player): Job? =
+    fun startMatch(localPlayer: Player, opponentPlayer: Player, gameChallengeExtra: GameChallenge): Job? =
         if (state == MatchState.IDLE) {
             _state = MatchState.STARTING
             viewModelScope.launch {
+                val newGame = Game(
+                    localPlayerMarker = getLocalPlayerMarker(localPlayer, gameChallengeExtra),
+                    board = GameBoard()
+                )
+                _onGoingGame.value=newGame
                 matchService.start(localPlayer, opponentPlayer,_onGoingGame.value)
                 _state = MatchState.STARTED
             }

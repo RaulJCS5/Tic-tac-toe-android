@@ -18,6 +18,7 @@ import project.android.rauljcs5.ui.screen.game.model.Marker
 @Composable
 fun TileView(
     move: Marker?,
+    enabled: Boolean,
     onSelected: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -25,7 +26,7 @@ fun TileView(
         .background(MaterialTheme.colors.background)
         .fillMaxSize(1.0f)
         .padding(12.dp)
-        .clickable(enabled = move == null) { onSelected() }
+        .clickable(enabled = move == null && enabled) { onSelected() }
     ) {
         if (move != null) {
             val marker = when (move) {
