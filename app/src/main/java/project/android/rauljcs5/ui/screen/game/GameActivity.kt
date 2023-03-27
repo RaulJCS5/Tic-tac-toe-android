@@ -7,6 +7,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import project.android.rauljcs5.DependenciesContainer
 import project.android.rauljcs5.GameChallenge
 import project.android.rauljcs5.Player
@@ -40,14 +42,20 @@ class GameActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val currentState = viewModel.state
+            val currentGame by viewModel.onGoingGame.collectAsState()
             TictactoeTheme {
                 viewModel.addGameChallenge(gameChallengeExtra)
-                GameView(gameState = GameState(gameChallenge = viewModel.gameChallenge!!))
+                GameView(
+                    gameState = GameState(
+                        gameChallenge = viewModel.gameChallenge!!,
+                        gameBoard = currentGame
+                    ),
+                    onMoveRequested = { at -> viewModel.makeMove(at) },
+                )
             }
-            if (viewModel.state == MatchState.IDLE){
-                viewModel.startMatch(localPlayer, opponentPlayer)
-            }
+        }
+        if (viewModel.state == MatchState.IDLE){
+            viewModel.startMatch(localPlayer, opponentPlayer)
         }
     }
 

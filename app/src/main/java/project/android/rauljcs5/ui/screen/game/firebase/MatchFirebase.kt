@@ -13,8 +13,7 @@ class MatchFirebase(private val realFirestoreDb: FirebaseFirestore) : MatchServi
 
     private var onGoingGame: Pair<GameBoard, String>? = null
 
-    override suspend fun start(local: Player, opponent: Player) {
-        val board = GameBoard()
+    override suspend fun start(local: Player, opponent: Player, board: GameBoard) {
         publishGame(board, local, opponent)
         onGoingGame = Pair(board, local.id.toString())
     }
