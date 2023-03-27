@@ -38,7 +38,6 @@ class LobbyFirebase(private val db: FirebaseFirestore) : LobbyService {
     }
 
     override suspend fun acceptChallenge(to: Player): Challenge {
-        //TODO("Accept challenge")
         val localPlayer = when (val currentState = state) {
             is Idle -> throw java.lang.IllegalStateException()
             is InUse -> currentState.localPlayer

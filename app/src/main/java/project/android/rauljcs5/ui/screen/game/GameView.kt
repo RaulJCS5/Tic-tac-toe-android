@@ -31,6 +31,14 @@ fun GameView(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
         Text(text = "${gameState.gameChallenge.localUser} vs ${gameState.gameChallenge.opponentUser}")
+        BoardView(
+            board = gameState.gameBoard,
+            onTileSelected = onMoveRequested,
+            modifier = Modifier
+                .padding(32.dp)
+                .weight(1.0f, true)
+                .fillMaxSize()
+        )
         Spacer(modifier = Modifier.height(32.dp))
     }
 }

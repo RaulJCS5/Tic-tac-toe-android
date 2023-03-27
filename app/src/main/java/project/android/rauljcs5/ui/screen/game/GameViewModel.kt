@@ -39,6 +39,7 @@ class GameViewModel(private val matchService: MatchService) : ViewModel() {
             _state = MatchState.STARTING
             viewModelScope.launch {
                 matchService.start(localPlayer, opponentPlayer,_onGoingGame.value)
+                _state = MatchState.STARTED
             }
         }
         else null
