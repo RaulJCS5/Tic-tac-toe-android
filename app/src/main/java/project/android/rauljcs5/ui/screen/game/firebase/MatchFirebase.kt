@@ -27,7 +27,16 @@ class MatchFirebase(private val realFirestoreDb: FirebaseFirestore) : MatchServi
     }
 
     override suspend fun makeMove(at: Position) {
-        TODO("Not yet implemented")
+        onGoingGame = checkNotNull(onGoingGame).also {
+            val game = it.copy(first = it.first.makeMove(at))
+            updateGame(game.first, game.second)
+        }
+    }
+    private suspend fun updateGame(game: GameBoard, gameId: String) {
+        realFirestoreDb.collection(PLAYING)
+            .document(gameId)
+            .update(game.toDocumentContent())
+            .await()
     }
 
     override suspend fun end() {
@@ -50,6 +59,17 @@ const val OPPONENT = "opponent"
 fun GameBoard.toDocumentContent(local: Player,opponent: Player) = mapOf(
     LOCAL to local,
     OPPONENT to opponent,
+    TURN_FIELD to turn.name,
+    BOARD_FIELD to toMovesList().joinToString(separator = "") {
+        when (it) {
+            Marker.CROSS -> "X"
+            Marker.CIRCLE -> "O"
+            null -> "-"
+        }
+    }
+)
+
+fun GameBoard.toDocumentContent() = mapOf(
     TURN_FIELD to turn.name,
     BOARD_FIELD to toMovesList().joinToString(separator = "") {
         when (it) {
